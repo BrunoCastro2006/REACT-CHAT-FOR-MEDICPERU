@@ -6,8 +6,6 @@ const socket = io("/");
 
 export default function App() {
   const [messages, setMessages] = useState([]);
-  const [aiMessages, setAiMessages] = useState([]);
-
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -17,6 +15,14 @@ export default function App() {
       socket.off("message", receiveMessage);
     };
   }, [messages]);
+
+  useEffect(() => {
+    socket.on("init");
+
+    // return () => {
+    //   socket.off("message", receiveMessage);
+    // };
+  }, []);
 
   const receiveMessage = (message) =>
     setMessages((state) => [message, ...state]);
